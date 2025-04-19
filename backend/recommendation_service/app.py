@@ -9,16 +9,16 @@ app = Flask(__name__)
 CORS(app, methods=['POST', 'GET'])
 
 # Load your dataset
-music_dataset = pd.read_csv('data_moods.csv')
+# music_dataset = pd.read_csv('data_moods.csv')
 
-emotion_to_music = {
-    'happy': 'happy',
-    'sadness': 'sad',
-    'angry': 'calm',
-    'fear': 'calm',
-    'disgust': 'calm',
-    'surprise': 'energetic'
-}
+# emotion_to_music = {
+#     'happy': 'happy',
+#     'sadness': 'sad',
+#     'angry': 'calm',
+#     'fear': 'calm',
+#     'disgust': 'calm',
+#     'surprise': 'energetic'
+# }
 
 
 def init_mistral():
@@ -33,16 +33,8 @@ def get_recommendation():
         emotion = data.get('emotion')
 
         if not emotion:
-            return jsonify({'message': 'No emotion detected', 'success': False}), 400
+            return jsonify({'message': 'No emotion detected', 'success': False , 'ln':'ln36'}), 400#####################
 
-        if emotion in ['happy', 'sadness']:
-            mood = emotion_to_music[emotion]
-            recs = music_dataset[music_dataset['mood'] == mood].sample(3)
-            return jsonify({
-                'recommendations': recs['track_name'].tolist(),
-                'success': True,
-                'message': 'Here are some music recommendations'
-            })
 
         mistral_client = init_mistral()
 
@@ -51,19 +43,29 @@ def get_recommendation():
         Suggestions can include music, exercise, short activities, or mindset tips.
         Be specific, helpful, and use a friendly tone.Also make it short and concise.
         Avoid generic responses like "go for a walk" or "listen to music".
-        
+        if music is suggested, provide a specific song name and artist.
+        If exercise is suggested, provide a specific type of exercise and duration. 
+        Only one of the music or exercise suggestions should be included in the response.
+        If you suggest a mindset tip, make it actionable and specific.
+        Avoid vague suggestions like "think positive" or "be grateful".
+        Be creative and think outside the box.
+        also if the user is feeling sad, suggest a specific type of food they can eat to feel better.
+        If the user is feeling happy, suggest a specific type of drink they can have to feel even better or suggest some music.
+        If user is feeling angry, suggest a specific type of exercise they can do to calm down.
+        If user is feeling disgusted, suggest a specific type of activity they can do to feel better.
+        Make it even shoreter and more concise.
         """
 
-        response = mistral_client.chat(
+        response = mistral_client.chat.complete(
             model="mistral-large-latest",
             messages=[{"role": "user", "content": prompt}]
         )
 
         message = response.choices[0].message.content.strip()
         logging.info(f"Received recommendation: {message}")
-        return jsonify({'recommendations': message, 'success': True , 'message': 'Here are some recommendations'}),200
+        return jsonify({'recommendations': message, 'success': True , 'message': 'Here are some recommendations' , 'ln':'ln65'}),200
     except Exception as e:
-        return jsonify({'message': str(e), 'success': False}), 500
+        return jsonify({'error': str(e), 'success': False }), 500
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
