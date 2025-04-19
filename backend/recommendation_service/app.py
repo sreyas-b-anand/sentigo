@@ -8,18 +8,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, methods=['POST', 'GET'])
 
-# Load your dataset
-# music_dataset = pd.read_csv('data_moods.csv')
-
-# emotion_to_music = {
-#     'happy': 'happy',
-#     'sadness': 'sad',
-#     'angry': 'calm',
-#     'fear': 'calm',
-#     'disgust': 'calm',
-#     'surprise': 'energetic'
-# }
-
+logging.basicConfig(level=logging.INFO)
 
 def init_mistral():
     api_key = os.getenv("MISTRAL_API_KEY")
@@ -33,7 +22,7 @@ def get_recommendation():
         emotion = data.get('emotion')
 
         if not emotion:
-            return jsonify({'message': 'No emotion detected', 'success': False , 'ln':'ln36'}), 400#####################
+            return jsonify({'message': 'No emotion detected', 'success': False }),400
 
 
         mistral_client = init_mistral()
@@ -63,7 +52,7 @@ def get_recommendation():
 
         message = response.choices[0].message.content.strip()
         logging.info(f"Received recommendation: {message}")
-        return jsonify({'recommendations': message, 'success': True , 'message': 'Here are some recommendations' , 'ln':'ln65'}),200
+        return jsonify({'recommendations': message, 'success': True , 'message': 'Here are some recommendations'}),200
     except Exception as e:
         return jsonify({'error': str(e), 'success': False }), 500
 
