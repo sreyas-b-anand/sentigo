@@ -9,9 +9,7 @@ app = Flask(__name__)
 CORS(app, methods=['POST', 'GET'])
 
 # Load your dataset
-music_dataset = pd.read_csv('
-                            data_moods.csv')
-
+music_dataset = pd.read_csv('data_moods.csv')
 
 emotion_to_music = {
     'happy': 'happy',
