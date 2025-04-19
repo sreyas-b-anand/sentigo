@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    emotion_service:
+      build: 
+       context : ./emotion_service
+      ports:
+        - 5000:5000
+
+      networks:
+        - mynetwork
+
+      volumes:
+        - "C:/ml/nutricio/backend/d3/Emotion_final.csv:/d3/Emotion_final.csv"
+    recomendation_service:
+      build: 
+       context: ./recommendation_service
+      ports:
+        - 5001:5001
+
+      networks:
+        - mynetwork
+      volumes:
+        - "C:/ml/nutricio/backend/d4/data_moods.csv:/d4/data_moods.csv"
+
+
+
+networks:
+  mynetwork:
+    driver : bridge
