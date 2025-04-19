@@ -13,7 +13,7 @@ def send_emotion(response):
     if response['success'] == False:
         return {'message': 'No emotion detected' , 'success' : False}
     logging.info(f"Received emotion: {response['predicted_emotion']}")
-    res =  requests.post('http://127.0.0.1:5001/get_recommendation' , json={'emotion': response['predicted_emotion']})
+    res =  requests.post('http://recomendation_service:5001/get_recommendation' , json={'emotion': response['predicted_emotion']})
     logging.info(f"Received response from recommendation service: {res.json()} , ln:17")
     
     if not res :
@@ -54,4 +54,4 @@ def get_emotion():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
    
-    app.run(port=5000 , debug=True)
+    app.run(host='0.0.0.0', port=5000 , debug=True)

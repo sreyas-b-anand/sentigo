@@ -5,23 +5,22 @@ services:
       build: 
        context : ./emotion_service
       ports:
-        - 5000:5000
+        - "5000:5000"
 
       networks:
-        - mynetwork
+        - "mynetwork"
 
       volumes:
         - "C:/ml/nutricio/backend/d3/Emotion_final.csv:/d3/Emotion_final.csv"
     recomendation_service:
       build: 
-       context: ./recommendation_service
+       context:  ./recommendation_service
       ports:
-        - 5001:5001
-
+        - "5001:5001"
+      env_file:
+        - "./recommendation_service/.env"
       networks:
-        - mynetwork
-      volumes:
-        - "C:/ml/nutricio/backend/d4/data_moods.csv:/d4/data_moods.csv"
+        - "mynetwork"
 
 
 
