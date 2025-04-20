@@ -12,7 +12,7 @@ class _LoadingState extends State<Loading> {
   void initState() {
     Future.delayed(
       Duration(seconds: 2),
-    ).then((value) => Navigator.popAndPushNamed(context, '/home'));
+    ).then((value) => Navigator.popAndPushNamed(context , '/home') );
     super.initState();
   }
 

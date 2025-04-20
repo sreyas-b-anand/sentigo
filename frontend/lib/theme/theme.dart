@@ -4,23 +4,39 @@ import 'package:google_fonts/google_fonts.dart';
 final ThemeData appTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: Color.fromARGB(255, 14, 6, 61),
-    primary: const Color.fromARGB(255, 6, 14, 46),
+    primary: const Color.fromARGB(255, 253, 238, 227),
     secondary: Colors.blueAccent,
+    onSurface : Colors.black,
   ),
-  scaffoldBackgroundColor: const Color.fromARGB(255, 207, 207, 207),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 241, 241, 241),
   textTheme: TextTheme(
+    displayLarge: GoogleFonts.poppins(
+      color: const Color.fromARGB(255, 0, 0, 0),
+      fontSize: 36,
+      fontWeight: FontWeight.w800,
+    ),
     titleLarge: GoogleFonts.poppins(
       color: const Color.fromARGB(255, 0, 0, 0),
+      fontSize: 32,
+      fontWeight: FontWeight.w500,
+    ),
+    titleMedium: GoogleFonts.poppins(
+      color: const Color.fromARGB(255, 0, 0, 0),
       fontSize: 24,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
+    ),
+    titleSmall: GoogleFonts.poppins(
+      color: const Color.fromARGB(255, 0, 0, 0),
+      fontSize: 20,
+      fontWeight: FontWeight.w300,
     ),
     bodyLarge: GoogleFonts.poppins(
-      color: const Color.fromARGB(255, 119, 116, 116),
+      color: const Color.fromARGB(255, 85, 81, 81),
       fontSize: 16,
       fontWeight: FontWeight.w500,
     ),
     bodyMedium: GoogleFonts.poppins(
-      color: const Color.fromARGB(255, 115, 115, 115),
+      color: const Color.fromARGB(255, 128, 118, 118),
       fontSize: 14,
       fontWeight: FontWeight.w400,
     ),
@@ -31,10 +47,10 @@ final ThemeData appTheme = ThemeData(
     ),
   ),
   appBarTheme: AppBarTheme(
-    backgroundColor: const Color.fromARGB(255, 6, 14, 46),
+    backgroundColor: const Color.fromARGB(255, 253, 238, 227),
     foregroundColor: Colors.white,
-    titleTextStyle: GoogleFonts.sacramento(
-      color: Colors.white,
+    titleTextStyle: GoogleFonts.poppins(
+      color: const Color.fromARGB(255, 0, 0, 0),
       fontSize: 28,
       fontWeight: FontWeight.w600,
     ),
