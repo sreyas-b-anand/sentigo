@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/theme/theme.dart';
 
 class StyledAppBar extends StatelessWidget implements PreferredSizeWidget {
   const StyledAppBar({super.key});
@@ -10,12 +9,9 @@ class StyledAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        'App Name',
-        style: TextStyle(color: AppTheme().appBarTextColor),
-      ),
+      title: Text('Sentigo' , style: Theme.of(context).appBarTheme.titleTextStyle,),
       centerTitle: true,
-      backgroundColor: AppTheme().appBarColor,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor
     );
   }
 }
