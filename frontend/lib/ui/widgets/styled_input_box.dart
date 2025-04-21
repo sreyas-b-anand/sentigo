@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-class StyledEmotionInput extends StatefulWidget {
-  const StyledEmotionInput({super.key});
+class StyledEmotionInputBox extends StatefulWidget {
+  const StyledEmotionInputBox({super.key});
 
   @override
-  State<StyledEmotionInput> createState() => _StyledEmotionInputState();
+  State<StyledEmotionInputBox> createState() => _StyledEmotionInputBoxState();
 }
 
-class _StyledEmotionInputState extends State<StyledEmotionInput> {
+class _StyledEmotionInputBoxState extends State<StyledEmotionInputBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,12 +36,15 @@ class _StyledEmotionInputState extends State<StyledEmotionInput> {
                       CircleAvatar(
                         backgroundImage:
                             Image.asset('assets/images/icon.png').image,
-                        radius: 15,
+                        radius: 12,
                       ),
                       SizedBox(width: 10),
                       Text(
                         'Sentigo here!!!',
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                        ),
                       ),
                     ],
                   ),
@@ -51,22 +54,31 @@ class _StyledEmotionInputState extends State<StyledEmotionInput> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Hey there! ',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w300,
+                        text: 'Hey! ',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w200,
+                          fontSize: 28,
                         ),
                       ),
 
                       TextSpan(
                         text: 'How do you feel about your',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w300,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w200,
+                          fontSize: 28,
                         ),
                       ),
                       TextSpan(
                         text: ' current emotion?',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w500,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 32,
                         ),
                       ),
                     ],
@@ -87,6 +99,7 @@ class _StyledEmotionInputState extends State<StyledEmotionInput> {
                     hintStyle: TextStyle(
                       color: const Color.fromARGB(255, 122, 124, 122),
                     ),
+                    fillColor: const Color.fromARGB(255, 234, 189, 189),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide(
@@ -105,7 +118,7 @@ class _StyledEmotionInputState extends State<StyledEmotionInput> {
                 style: ButtonStyle(
                   alignment: Alignment.center,
                   padding: WidgetStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   ),
                   backgroundColor: WidgetStateProperty.all<Color>(
                     Theme.of(context).colorScheme.primary,
@@ -125,7 +138,7 @@ class _StyledEmotionInputState extends State<StyledEmotionInput> {
                   child: Icon(
                     Icons.arrow_right_alt_outlined,
                     color: Colors.black,
-                    size: 24,
+                    size: 28,
                   ),
                 ),
               ),
@@ -136,28 +149,3 @@ class _StyledEmotionInputState extends State<StyledEmotionInput> {
     );
   }
 }
-
-
-
-
-
-
-// Container(
-//             width: double.infinity,
-//             padding: const EdgeInsets.all(8),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.all(Radius.circular(8)),
-//               color: const Color.fromARGB(255, 244, 243, 243),
-//             ),
-
-//             child: Row(
-//               children: [
-//                 CircleAvatar(
-//                   backgroundImage: Image.asset('assets/images/icon.png').image,
-//                   radius: 22,
-//                 ),
-//                 SizedBox(width: 20),
-//                 Text(title, style: Theme.of(context).textTheme.bodyLarge),
-//               ],
-//             ),
-//           ),
