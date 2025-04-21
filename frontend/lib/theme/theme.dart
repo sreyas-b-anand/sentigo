@@ -27,8 +27,8 @@ final ThemeData appTheme = ThemeData(
     ),
     titleSmall: GoogleFonts.poppins(
       color: const Color.fromARGB(255, 0, 0, 0),
-      fontSize: 20,
-      fontWeight: FontWeight.w300,
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
     ),
     bodyLarge: GoogleFonts.poppins(
       color: const Color.fromARGB(255, 85, 81, 81),

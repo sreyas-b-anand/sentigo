@@ -1,19 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EmotionNotifier extends Notifier<String> {
+class EmotionNotifier extends Notifier<Map<String, String>> {
   @override
-  String state = "Type something to get the emotion";
-
-  @override
-  String build() {
-    return state;
+  Map<String, String> build() {
+    return {
+      'emotion': '',
+      'confidence': '',
+    };
   }
 
-  void setEmotion(String emotion) {
-    state = emotion;
+  void setEmotion(String emotion, String confidence) {
+    state = {
+      'emotion': emotion,
+      'confidence': confidence,
+    };
   }
 }
 
-final emotionProvider = NotifierProvider<EmotionNotifier, String>(() {
+final emotionProvider = NotifierProvider<EmotionNotifier, Map<String, String>>(() {
   return EmotionNotifier();
 });

@@ -14,7 +14,11 @@ class Home extends StatelessWidget {
 
       body: Container(
         child: Column(
-          children: [StyledEmotionInputBox(), StyledEmotionClicker() , StyledEmotionOutputBox()],
+          children: [
+            StyledEmotionInputBox(),
+            StyledEmotionClicker(),
+            StyledEmotionOutputBox(),
+          ],
         ),
       ),
     );

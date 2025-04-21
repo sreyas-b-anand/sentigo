@@ -1,15 +1,73 @@
+import 'dart:convert';
 import 'dart:developer';
-
+import 'package:flutter_app/providers/emotion_providers.dart';
+import 'package:flutter_app/providers/loading_provider.dart';
+import 'package:flutter_app/providers/recommendation_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-class StyledEmotionInputBox extends StatefulWidget {
+class StyledEmotionInputBox extends ConsumerStatefulWidget {
   const StyledEmotionInputBox({super.key});
 
   @override
-  State<StyledEmotionInputBox> createState() => _StyledEmotionInputBoxState();
+  ConsumerState<StyledEmotionInputBox> createState() =>
+      _StyledEmotionInputBoxState();
 }
 
-class _StyledEmotionInputBoxState extends State<StyledEmotionInputBox> {
+class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
+  final TextEditingController _textController = TextEditingController();
+
+  Future<Map<String, dynamic>> sendText() async {
+    ref.read(loadingProvider.notifier).setLoading(true);
+    log('send text', name: 'sendText');
+
+    final url = Uri.parse('http://10.0.2.2:5000/get_emotion');
+
+    log(_textController.text, name: "text");
+
+    var response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'text': _textController.text}),
+    );
+
+    log(response.statusCode.toString(), name: 'status code');
+    var data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      log('Raw body: ${response.body}', name: 'response body');
+      log('Data :  $data');
+      ref.read(loadingProvider.notifier).setLoading(false);
+      return data;
+    } else {
+      log('Error: ${response.statusCode}', name: 'error');
+      ref.read(loadingProvider.notifier).setLoading(false);
+      return {'emotion': 'Unknown', 'confidence': 0.0};
+    }
+  }
+
+  Future<String> sendRecommendation(emotion) async {
+    ref.read(loadingProvider.notifier).setLoading(true);
+    log('send recommendation', name: 'sendRecommendation');
+    final url = Uri.parse('http://10.0.2.2:5001/get_recommendation');
+
+    var response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'emotion': emotion}),
+    );
+    if (response.statusCode == 200) {
+      log('Raw body: ${response.body}', name: 'response body');
+      var data = jsonDecode(response.body);
+      ref.read(loadingProvider.notifier).setLoading(false);
+      return data['recommendations'];
+    } else {
+      log('Error: ${response.statusCode}', name: 'error');
+      ref.read(loadingProvider.notifier).setLoading(false);
+      return 'No recommendation available';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,7 +151,7 @@ class _StyledEmotionInputBoxState extends State<StyledEmotionInputBox> {
               Expanded(
                 child: TextField(
                   minLines: 1,
-
+                  controller: _textController,
                   decoration: InputDecoration(
                     hintText: 'Type here...',
                     hintStyle: TextStyle(
@@ -112,9 +170,25 @@ class _StyledEmotionInputBoxState extends State<StyledEmotionInputBox> {
               ),
               SizedBox(width: 15),
               ElevatedButton(
-                onPressed: () {
-                  log('Button Pressed', name: 'buttonPressed');
+                onPressed: () async {
+                  log('Button pressed');
+                  var newData = await sendText();
+                  log('New data received: $newData');
+
+                  ref
+                      .read(emotionProvider.notifier)
+                      .setEmotion(
+                        newData['emotion'],
+                        newData['confidence'].toString(),
+                      );
+
+                  var value = await sendRecommendation(newData['emotion']);
+
+                  ref
+                      .read(recommendationNotifier.notifier)
+                      .setRecommendation(value);
                 },
+
                 style: ButtonStyle(
                   alignment: Alignment.center,
                   padding: WidgetStateProperty.all(

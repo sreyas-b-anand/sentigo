@@ -31,11 +31,13 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
+  flutter_spinkit: ^5.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^2.6.1
+  http: ^1.3.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +65,11 @@ flutter:
   assets:
     - assets/images/logo.png  # Directory containing images
     - assets/images/icon.png  # Directory containing images
+    - assets/images/happy.jpeg  # Directory containing images
+    - assets/images/fear.jpeg  # Directory containing images
+    - assets/images/anger.jpeg  # Directory containing images
+    - assets/images/disgust.jpeg  # Directory containing images
+    - assets/images/sad.jpeg  # Directory containing images
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

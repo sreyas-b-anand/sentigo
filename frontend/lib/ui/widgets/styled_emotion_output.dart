@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StyledEmotionClicker extends StatefulWidget {
+class StyledEmotionClicker extends ConsumerStatefulWidget {
   const StyledEmotionClicker({super.key});
 
   @override
-  State<StyledEmotionClicker> createState() => _StyledEmotionClickerState();
+  ConsumerState<StyledEmotionClicker> createState() => _StyledEmotionClickerState();
 }
 
-class _StyledEmotionClickerState extends State<StyledEmotionClicker> {
+class _StyledEmotionClickerState extends ConsumerState<StyledEmotionClicker> {
   final List<Map<String, dynamic>> emotions = [
-    {'name': 'Happy', 'icon': Icons.sentiment_very_satisfied},
-    {'name': 'Sad', 'icon': Icons.sentiment_dissatisfied},
-    {'name': 'Angry', 'icon': Icons.sentiment_very_dissatisfied},
-    {'name': 'Surprised', 'icon': Icons.sentiment_neutral},
-    {'name': 'Confused', 'icon': Icons.sentiment_satisfied},
+    {'name': '1'},
+    {'name': '2'},
+    {'name': '3'},
+    {'name': '4'},
+    {'name': '5'},
   ];
   @override
   Widget build(BuildContext context) {
@@ -31,35 +32,37 @@ class _StyledEmotionClickerState extends State<StyledEmotionClicker> {
         children: [
           Text(
             'Or Click here...',
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 15),
           Expanded(
-            child: ListView.builder(
-              itemCount: emotions.length,
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-
-              itemBuilder:
-                  (context, index) => GestureDetector(
-                    onTap: () {
-                      // Handle the click event here
-                      print('Clicked on ${emotions[index]['name']}');
-                    },
-
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: double.maxFinite,
-                      
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
+            child: Row(
+              children:
+                  emotions.map((emotion) {
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          // Handle the click event here
+                          print('Clicked on ${emotion['name']}!');
+                        },
+                        child: CircleAvatar(
+                          radius: 20,
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                emotion['name'],
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                      child: CircleAvatar(
-                        child: Icon(emotions[index]['icon'], size: 48),
-                      ),
-                    ),
-                  ),
+                    );
+                  }).toList(),
             ),
           ),
         ],

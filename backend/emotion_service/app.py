@@ -16,10 +16,11 @@ def get_emotion():
         logging.info(f"Received text: {text}")
         response =  get_emotion_text(text)
         if not response:
-            return jsonify({'message': 'No emotion detected' , 'success' : False}), 400
+            return jsonify({'message': 'Error in server' , 'success' : False }), 400
 
-
-        return jsonify({'message': 'Emotion found' , 'success' : True , 'emotion' : response['predicted_emotion']}), 200
+        if response['no_emotion']:
+            return jsonify({'message' : 'Please give more info' , 'success' : False , 'no_emotion' : True})
+        return jsonify({'message': 'Emotion found' , 'success' : True , 'emotion' : response['emotion'] , 'confidence':response['confidence']}), 200
     
     except Exception as e:
         logging.error(f"Error: {e}")

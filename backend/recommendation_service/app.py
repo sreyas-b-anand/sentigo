@@ -43,6 +43,8 @@ def get_recommendation():
         If user is feeling angry, suggest a specific type of exercise they can do to calm down.
         If user is feeling disgusted, suggest a specific type of activity they can do to feel better.
         Make it even shoreter and more concise.
+        response should be like 'music - music_name' ,
+        'exercise - exercise_name'  etc ,just 3 things needed, Avoid any * symbol in there just plain text also no need of a heading , just give the recommendations only
         """
 
         response = mistral_client.chat.complete(

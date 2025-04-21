@@ -30,8 +30,8 @@ def get_emotion_text(text):
     predicted_emotion = model.classes_[max_index]
     
     if proba[0][max_index] < 0.8:
-        return {'success': False , 'message': 'Please provide more info' }
+        return {'success': False , 'message': 'Please provide more info' , 'no_emotion' : True }
         
 
     print(f"\nPredicted Emotion: {predicted_emotion} with confidence {proba[0][max_index]*100:.2f}%")
-    return {'predicted_emotion': predicted_emotion, 'confidence': proba[0][max_index]*100 , 'success': True , 'message': 'Emotion detected'}
+    return {'emotion': predicted_emotion, 'confidence': round(proba[0][max_index] * 100, 2), 'success': True, 'message': 'Emotion detected' , 'no_emotion' : False}
