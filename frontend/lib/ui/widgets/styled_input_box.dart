@@ -38,10 +38,13 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
       log('Raw body: ${response.body}', name: 'response body');
       log('Data :  $data');
       ref.read(loadingProvider.notifier).setLoading(false);
+      _textController.text = '';
       return data;
     } else {
       log('Error: ${response.statusCode}', name: 'error');
       ref.read(loadingProvider.notifier).setLoading(false);
+      _textController.text = '';
+
       return {'emotion': 'Unknown', 'confidence': 0.0};
     }
   }
