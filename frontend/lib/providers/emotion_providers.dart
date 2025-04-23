@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 class EmotionNotifier extends Notifier<Map<String, String>> {
   @override
   Map<String, String> build() {
