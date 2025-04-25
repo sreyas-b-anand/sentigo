@@ -65,12 +65,7 @@ flutter:
   assets:
     - assets/images/logo.png  # Directory containing images
     - assets/images/icon.png  # Directory containing images
-    - assets/images/happy.jpeg  # Directory containing images
-    - assets/images/fear.jpeg  # Directory containing images
-    - assets/images/anger.jpeg  # Directory containing images
-    - assets/images/disgust.jpeg  # Directory containing images
-    - assets/images/sad.jpeg  # Directory containing images
-  
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/widgets/styled_appbar.dart';
-import 'package:flutter_app/ui/widgets/styled_emotion_output.dart';
+import 'package:flutter_app/ui/widgets/styled_emotion_clicker.dart';
 import 'package:flutter_app/ui/widgets/styled_emotion_output_box.dart';
 import 'package:flutter_app/ui/widgets/styled_input_box.dart';
 

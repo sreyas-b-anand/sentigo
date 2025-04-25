@@ -149,77 +149,81 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
             ),
           ),
           SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  minLines: 1,
-                  controller: _textController,
-                  decoration: InputDecoration(
-                    hintText: 'Type here...',
-                    hintStyle: TextStyle(
-                      color: const Color.fromARGB(255, 122, 124, 122),
-                    ),
-                    fillColor: const Color.fromARGB(255, 234, 189, 189),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: const Color.fromARGB(255, 240, 240, 240),
-                        width: 1,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    minLines: 1,
+                    controller: _textController,
+                    decoration: InputDecoration(
+                      
+                      hintText: 'Type your emotion...',
+                      hintStyle: TextStyle(color: Colors.grey[500]),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 14,
+                        horizontal: 18,
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFF4F4F4),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(width: 15),
-              ElevatedButton(
-                onPressed: () async {
-                  log('Button pressed');
-                  var newData = await sendText();
-                  log('New data received: $newData');
+                const SizedBox(width: 12),
+                ElevatedButton(
+                  onPressed: () async {
+                    log('Button pressed');
+                    var newData = await sendText();
+                    log('New data received: $newData');
 
-                  ref
-                      .read(emotionProvider.notifier)
-                      .setEmotion(
-                        newData['emotion'],
-                        newData['confidence'].toString(),
-                      );
+                    ref
+                        .read(emotionProvider.notifier)
+                        .setEmotion(
+                          newData['emotion'],
+                          newData['confidence'].toString(),
+                        );
 
-                  var value = await sendRecommendation(newData['emotion']);
+                    var value = await sendRecommendation(newData['emotion']);
 
-                  ref
-                      .read(recommendationNotifier.notifier)
-                      .setRecommendation(value);
-                },
-
-                style: ButtonStyle(
-                  alignment: Alignment.center,
-                  padding: WidgetStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                    ref
+                        .read(recommendationNotifier.notifier)
+                        .setRecommendation(value);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    elevation: 2,
                   ),
-                  backgroundColor: WidgetStateProperty.all<Color>(
-                    Theme.of(context).colorScheme.primary,
-                  ),
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        width: 1,
-                      ),
+                  child: Transform.rotate(
+                    angle: -45 * 3.14 / 180,
+                    child: const Icon(
+                      Icons.arrow_right_alt_rounded,
+                      color: Colors.white,
+                      size: 24,
                     ),
                   ),
                 ),
-                child: Transform.rotate(
-                  angle: -45 * 3.14 / 180,
-                  child: Icon(
-                    Icons.arrow_right_alt_outlined,
-                    color: Colors.black,
-                    size: 28,
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

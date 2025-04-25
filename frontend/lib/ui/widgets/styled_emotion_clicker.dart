@@ -19,7 +19,7 @@ class StyledEmotionClicker extends ConsumerStatefulWidget {
 class _StyledEmotionClickerState extends ConsumerState<StyledEmotionClicker> {
   Future<Map<String, dynamic>> sendText(String text) async {
     ref.read(loadingProvider.notifier).setLoading(true);
-    log('send text', name: 'sendText');
+    log('test', name: 'sendText');
 
     final url = Uri.parse('http://10.0.2.2:5000/get_emotion');
 
@@ -100,38 +100,44 @@ class _StyledEmotionClickerState extends ConsumerState<StyledEmotionClicker> {
             child: Row(
               children:
                   emotions.map((emotion) {
-                    return Expanded(
-                      child: GestureDetector(
-                        onTap: () async {
-                          log('Button pressed');
-                          var newData = await sendText(
-                            'I\'m feeling ${emotion['name']} ',
-                          );
-                          log('New data received: $newData');
-
-                          ref
-                              .read(emotionProvider.notifier)
-                              .setEmotion(
-                                newData['emotion'],
-                                newData['confidence'].toString(),
-                              );
-
-                          var value = await sendRecommendation(
-                            newData['emotion'],
-                          );
-
-                          ref
-                              .read(recommendationNotifier.notifier)
-                              .setRecommendation(value);
-                        },
-                        child: CircleAvatar(
-                          radius: 20,
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                emotion['label'],
-                                style: Theme.of(context).textTheme.bodyLarge,
+                    return Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.all(2.0),
+                      child: Expanded(
+                        child: GestureDetector(
+                          onTap: () async {
+                            log('Button pressed');
+                            var newData = await sendText(
+                              'I\'m feeling ${emotion['name']} ',
+                            );
+                            log('New data received: $newData');
+                      
+                            ref
+                                .read(emotionProvider.notifier)
+                                .setEmotion(
+                                  newData['emotion'],
+                                  newData['confidence'].toString(),
+                                );
+                      
+                            var value = await sendRecommendation(
+                              newData['emotion'],
+                            );
+                      
+                            ref
+                                .read(recommendationNotifier.notifier)
+                                .setRecommendation(value);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(3.0),
+                            color: Theme.of(context).colorScheme.primaryFixed,
+                      
+                            child: CircleAvatar(
+                              radius: 20,
+                              child: Center(
+                                child: Text(
+                                  emotion['label'],
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
                               ),
                             ),
                           ),
