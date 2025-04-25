@@ -4,9 +4,7 @@ from model import get_emotion_text
 import logging , requests
 app = Flask(__name__)
 
-
 CORS(app , methods=['POST', 'GET'])
-
 
 @app.route('/get_emotion', methods=['POST'])
 def get_emotion():
