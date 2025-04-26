@@ -82,6 +82,13 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
           bottomRight: Radius.circular(30),
         ),
         color: Theme.of(context).colorScheme.primary,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ]
       ),
       width: double.infinity,
       height: 320,

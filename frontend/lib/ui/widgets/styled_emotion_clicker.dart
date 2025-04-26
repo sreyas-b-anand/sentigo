@@ -82,6 +82,14 @@ class _StyledEmotionClickerState extends ConsumerState<StyledEmotionClicker> {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       height: 120,
       width: double.infinity,
@@ -98,53 +106,40 @@ class _StyledEmotionClickerState extends ConsumerState<StyledEmotionClicker> {
           SizedBox(height: 15),
           Expanded(
             child: Row(
-              children:
-                  emotions.map((emotion) {
-                    return Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.all(2.0),
-                      child: Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
-                            log('Button pressed');
-                            var newData = await sendText(
-                              'I\'m feeling ${emotion['name']} ',
-                            );
-                            log('New data received: $newData');
-                      
-                            ref
-                                .read(emotionProvider.notifier)
-                                .setEmotion(
-                                  newData['emotion'],
-                                  newData['confidence'].toString(),
-                                );
-                      
-                            var value = await sendRecommendation(
-                              newData['emotion'],
-                            );
-                      
-                            ref
-                                .read(recommendationNotifier.notifier)
-                                .setRecommendation(value);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(3.0),
-                            color: Theme.of(context).colorScheme.primaryFixed,
-                      
-                            child: CircleAvatar(
-                              radius: 20,
-                              child: Center(
-                                child: Text(
-                                  emotion['label'],
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
                       ),
-                    );
-                  }).toList(),
+                    ),
+                    child: Text(
+                      'Happy',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    child: Text(
+                      'Sad',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
