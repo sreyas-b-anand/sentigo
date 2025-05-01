@@ -1,9 +1,0 @@
-flask
-flask_cors
-pandas
-numpy
-scikit-learn
-requests
-mistralai
-python-dotenv
-dotenv
