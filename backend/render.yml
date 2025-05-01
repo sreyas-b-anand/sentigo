@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: emotion-service
+    env: docker
+    dockerfilePath: ./emotion_service/Dockerfile  # Path to the Dockerfile for emotion_service
+    buildCommand: ''  # Optional: provide any build command if required
+    startCommand: ''  # Optional: provide any start command if required
+    ports:
+      - "5000:5000"   # Expose port 5000 for this service
+
+  - type: web
+    name: another-service
+    env: docker
+    dockerfilePath: ./recommendation_service/Dockerfile  # Path to the Dockerfile for another_service
+    buildCommand: ''
+    startCommand: ''
+    ports:
+      - "5001:5001"   # Expose port 5001 for this service
