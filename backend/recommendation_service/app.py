@@ -15,6 +15,10 @@ def init_mistral():
     client = Mistral(api_key=api_key)
     return client
 
+@app.route('/ping' , methods=['GET'])
+def ping():
+    return jsonify({'message': 'Recommendation service is running', 'success': True}), 200
+
 @app.route('/get_recommendation', methods=['POST'])
 def get_recommendation():
     try:

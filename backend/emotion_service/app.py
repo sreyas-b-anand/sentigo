@@ -5,6 +5,10 @@ import logging , requests
 app = Flask(__name__)
 
 CORS(app , methods=['POST', 'GET'])
+@app.route('/ping' , methods=['GET'])
+def ping():
+    return jsonify({'message': 'Emotion service is running', 'success': True}), 200
+
 
 @app.route('/get_emotion', methods=['POST'])
 def get_emotion():
