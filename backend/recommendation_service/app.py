@@ -45,6 +45,7 @@ def get_recommendation():
         Make it even shoreter and more concise.
         response should be like 'music - music_name' ,
         'exercise - exercise_name'  etc ,just 3 things needed, Avoid any * symbol in there just plain text also no need of a heading , just give the recommendations only
+        Also try to give different recommendations each time, even if the user is feeling the same emotion.
         """
 
         response = mistral_client.chat.complete(
