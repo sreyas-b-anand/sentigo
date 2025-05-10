@@ -68,10 +68,10 @@ class _StyledEmotionOutputBoxState extends ConsumerState<StyledEmotionOutputBox>
                     loading
                         ? Center(
                           child: SpinKitFadingCircle(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: const Color.fromARGB(255, 61, 61, 61),
                             size: 50.0,
                           ),
-                        ) // Custom spinner animation
+                        ) 
                         : (localEmotion['emotion'] != ''
                             ? Padding(
                               padding: const EdgeInsets.only(top: 6),

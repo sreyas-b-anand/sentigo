@@ -6,6 +6,7 @@ import 'package:flutter_app/providers/recommendation_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class StyledEmotionInputBox extends ConsumerStatefulWidget {
   const StyledEmotionInputBox({super.key});
@@ -17,19 +18,23 @@ class StyledEmotionInputBox extends ConsumerStatefulWidget {
 
 class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
   final TextEditingController _textController = TextEditingController();
+  final String API_URL_EMOTION_SERVICE =
+      dotenv.env['FLUTTER_APP_EMOTION_SERVICE'] ?? '';    
+  final String API_URL_RECOMMENDATION_SERVICE =
+      dotenv.env['FLUTTER_APP_RECOMMENDATION_SERVICE'] ?? '';
 
-  Future<Map<String, dynamic>> sendText() async {
+  Future<Map<String, dynamic>> sendText(text) async {
     ref.read(loadingProvider.notifier).setLoading(true);
     log('send text', name: 'sendText');
 
-    final url = Uri.parse('http://10.0.2.2:5000/get_emotion');
+    final url = Uri.parse(API_URL_EMOTION_SERVICE);
 
     log(_textController.text, name: "text");
 
     var response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'text': _textController.text}),
+      body: jsonEncode({'text': text}),
     );
 
     log(response.statusCode.toString(), name: 'status code');
@@ -52,7 +57,7 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
   Future<String> sendRecommendation(emotion) async {
     ref.read(loadingProvider.notifier).setLoading(true);
     log('send recommendation', name: 'sendRecommendation');
-    final url = Uri.parse('http://10.0.2.2:5001/get_recommendation');
+    final url = Uri.parse(API_URL_RECOMMENDATION_SERVICE);
 
     var response = await http.post(
       url,
@@ -88,7 +93,7 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
-        ]
+        ],
       ),
       width: double.infinity,
       height: 320,
@@ -176,7 +181,6 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
                     minLines: 1,
                     controller: _textController,
                     decoration: InputDecoration(
-                      
                       hintText: 'Type your emotion...',
                       hintStyle: TextStyle(color: Colors.grey[500]),
                       contentPadding: const EdgeInsets.symmetric(
@@ -196,7 +200,7 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
                 ElevatedButton(
                   onPressed: () async {
                     log('Button pressed');
-                    var newData = await sendText();
+                    var newData = await sendText(_textController.text);
                     log('New data received: $newData');
 
                     ref
