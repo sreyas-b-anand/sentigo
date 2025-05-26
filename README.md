@@ -50,8 +50,8 @@ cd sentigo
 
 - Create a .env file in frontend folder and paste the below code in it
 ```bash
-FLUTTER_APP_EMOTION_SERVICE=http://10.0.2.2:5000/get_emotion
-FLUTTER_APP_RECOMMENDATION_SERVICE=http://10.0.2.2:5001/get_recommendation
+FLUTTER_APP_EMOTION_SERVICE=your_backend_url/get_emotion
+FLUTTER_APP_RECOMMENDATION_SERVICE=your_backend_url/get_recommendation
 ```
 
 ### 3. Backend Setup
