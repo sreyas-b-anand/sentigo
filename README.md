@@ -42,12 +42,7 @@ The project is divided into three main components:
 git clone https://github.com/sreyas-b-anand/sentigo
 cd sentigo
 ```
-### 2. Backend Setup
-```bash
-cd backend
-docker-compose up --build
-```
-### 3. ENV setup
+### 2. ENV setup
 - Create a .env file in recommendation_service folder and paste the below code in it . You need an api key from <link>https://mistral.ai/</link>
 ```bash
 'MISTRAL_API_KEY'='YOUR API KEY'
@@ -59,6 +54,11 @@ FLUTTER_APP_EMOTION_SERVICE=http://10.0.2.2:5000/get_emotion
 FLUTTER_APP_RECOMMENDATION_SERVICE=http://10.0.2.2:5001/get_recommendation
 ```
 
+### 3. Backend Setup
+```bash
+cd backend
+docker-compose up --build
+```
  * This will:
 
   - Start the emotion_service on port 5000.
