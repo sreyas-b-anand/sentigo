@@ -12,8 +12,8 @@ Sentigo is a mobile application designed to analyze user emotions and provide pe
 
 ## Images
 <p float="left">
-  <img src="images/image1.png" width="45%" />
-  <img src="images/image2.png" width="45%" />
+  <img src="images/example2.png" width="45%" style="margin-right: 5%"/>
+  <img src="images/example1.png" width="45%" />
 </p>
 
 
