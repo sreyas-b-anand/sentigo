@@ -6,7 +6,16 @@ Sentigo is a mobile application designed to analyze user emotions and provide pe
 
 - **Emotion Detection**: Analyze user input to detect emotions using the `emotion_service`.
 - **Personalized Recommendations**: Provide tailored recommendations based on detected emotions using the `recommendation_service`.
+
 ---
+
+
+## Images
+<p float="left">
+  <img src="images/image1.png" width="45%" />
+  <img src="images/image2.png" width="45%" />
+</p>
+
 
 ## Architecture
 
