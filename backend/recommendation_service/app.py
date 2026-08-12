@@ -46,9 +46,7 @@ def ping():
     "/get_recommendation",
     response_model=RecommendationResponse,
 )
-def get_recommendation(
-    request: RecommendationRequest,
-):
+def get_recommendation(request: RecommendationRequest):
 
     try:
 
