@@ -3,17 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 from services import get_emotion_text
-from schemas import EmotionRequest
+from schemas import EmotionRequest , EmotionResponse
 
 
 app = FastAPI(
     title="Sentigo Emotion Service"
 )
 
-
-# ============================================================
-# CORS
-# ============================================================
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,11 +19,6 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-
-# ============================================================
-# HEALTH CHECK
-# ============================================================
-
 @app.get("/ping")
 def ping():
 
@@ -36,10 +27,6 @@ def ping():
         "success": True
     }
 
-
-# ============================================================
-# EMOTION PREDICTION
-# ============================================================
 
 @app.post("/get_emotion")
 def get_emotion(request: EmotionRequest):
@@ -52,26 +39,26 @@ def get_emotion(request: EmotionRequest):
 
         if not response:
 
-            return {
-                "message": "Error in server",
-                "success": False
-            }
+            return EmotionResponse(
+                message="Error in server",
+                success=False,
+            )
 
         if response["no_emotion"]:
 
-            return {
-                "message": response["message"],
-                "success": False,
-                "no_emotion": True
-            }
+            return EmotionResponse(
+                message=response["message"],
+                success=False,
+                no_emotion=True,
+            )
 
-        return {
-            "message": "Emotion found",
-            "success": True,
-            "emotion": response["emotion"],
-            "confidence": response["confidence"],
-            "no_emotion": False
-        }
+        return EmotionResponse(
+            message="Emotion found",
+            success=True,
+            emotion=response["emotion"],
+            confidence=response["confidence"],
+            no_emotion=False,
+        )
 
     except Exception as e:
 
@@ -79,7 +66,7 @@ def get_emotion(request: EmotionRequest):
             f"Error: {e}"
         )
 
-        return {
-            "message": "An error occurred",
-            "success": False
-        }
+        return EmotionResponse(
+            message="An error occurred",
+            success=False,
+        )
