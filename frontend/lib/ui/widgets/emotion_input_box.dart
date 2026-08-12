@@ -70,7 +70,7 @@ class _StyledEmotionInputBoxState extends ConsumerState<EmotionInputBox> {
         ],
       ),
       width: double.infinity,
-      height: 280,
+      
       child: Column(
         children: [
           Expanded(
