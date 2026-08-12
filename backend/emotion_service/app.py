@@ -19,7 +19,7 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-@app.get("/ping")
+@app.get("/")
 def ping():
 
     return {
