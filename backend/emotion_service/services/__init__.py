@@ -1,0 +1,1 @@
+from services.emotion import get_emotion_text

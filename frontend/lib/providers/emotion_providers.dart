@@ -1,21 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-class EmotionNotifier extends Notifier<Map<String, String>> {
+import 'package:sentigo/models/emotion.dart';
+
+class EmotionNotifier extends Notifier<EmotionResponse> {
   @override
-  Map<String, String> build() {
-    return {
-      'emotion': '',
-      'confidence': '',
-    };
+  EmotionResponse build() {
+    return EmotionResponse(
+      message: '',
+      success: false,
+      emotion: '',
+      confidence: 0,
+      noEmotion: true,
+    );
   }
 
-  void setEmotion(String emotion, String confidence) {
-    state = {
-      'emotion': emotion,
-      'confidence': confidence,
-    };
+  void setEmotion(EmotionResponse response) {
+    state = response;
   }
 }
 
-final emotionProvider = NotifierProvider<EmotionNotifier, Map<String, String>>(() {
-  return EmotionNotifier();
-});
+final emotionProvider =
+    NotifierProvider<EmotionNotifier, EmotionResponse>(
+  () => EmotionNotifier(),
+);

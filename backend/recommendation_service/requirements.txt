@@ -1,9 +1,5 @@
-flask
-flask_cors
-pandas
-numpy
-scikit-learn
-requests
-mistralai
-python-dotenv
-dotenv
+fastapi==0.141.1
+groq==1.6.0
+pydantic==2.13.4
+pydantic_settings==2.15.0
+uvicorn[standard]
