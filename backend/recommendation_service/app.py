@@ -34,7 +34,7 @@ app.add_middleware(
 recommendation_service = RecommendationService()
 
 
-@app.get("/ping")
+@app.get("/")
 def ping():
     return {
         "message": "Recommendation service is running",
