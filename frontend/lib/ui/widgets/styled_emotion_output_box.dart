@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/loading_provider.dart';
-import 'package:flutter_app/providers/emotion_providers.dart';
-import 'package:flutter_app/providers/recommendation_provider.dart';
+import 'package:sentigo/providers/loading_provider.dart';
+import 'package:sentigo/providers/emotion_providers.dart';
+import 'package:sentigo/providers/recommendation_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

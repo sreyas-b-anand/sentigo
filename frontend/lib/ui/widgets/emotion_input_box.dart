@@ -1,25 +1,25 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_app/providers/emotion_providers.dart';
-import 'package:flutter_app/providers/loading_provider.dart';
-import 'package:flutter_app/providers/recommendation_provider.dart';
+import 'package:sentigo/providers/emotion_providers.dart';
+import 'package:sentigo/providers/loading_provider.dart';
+import 'package:sentigo/providers/recommendation_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class StyledEmotionInputBox extends ConsumerStatefulWidget {
-  const StyledEmotionInputBox({super.key});
+class EmotionInputBox extends ConsumerStatefulWidget {
+  const EmotionInputBox({super.key});
 
   @override
-  ConsumerState<StyledEmotionInputBox> createState() =>
+  ConsumerState<EmotionInputBox> createState() =>
       _StyledEmotionInputBoxState();
 }
 
-class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
+class _StyledEmotionInputBoxState extends ConsumerState<EmotionInputBox> {
   final TextEditingController _textController = TextEditingController();
   final String API_URL_EMOTION_SERVICE =
-      dotenv.env['FLUTTER_APP_EMOTION_SERVICE'] ?? '';    
+      dotenv.env['FLUTTER_APP_EMOTION_SERVICE'] ?? '';
   final String API_URL_RECOMMENDATION_SERVICE =
       dotenv.env['FLUTTER_APP_RECOMMENDATION_SERVICE'] ?? '';
 
@@ -96,7 +96,7 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
         ],
       ),
       width: double.infinity,
-      height: 320,
+      height: 280,
       child: Column(
         children: [
           Expanded(
@@ -137,21 +137,12 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
                       ),
 
                       TextSpan(
-                        text: 'How do you feel about your',
+                        text: 'Any this to share here?',
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w200,
                           fontSize: 28,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' current emotion?',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 32,
                         ),
                       ),
                     ],
@@ -224,15 +215,13 @@ class _StyledEmotionInputBoxState extends ConsumerState<StyledEmotionInputBox> {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     elevation: 2,
                   ),
-                  child: Transform.rotate(
-                    angle: -45 * 3.14 / 180,
-                    child: const Icon(
-                      Icons.arrow_right_alt_rounded,
-                      color: Colors.white,
+                  child: const Icon(
+                      Icons.check,
+                      color: Colors.black,
                       size: 24,
                     ),
                   ),
-                ),
+                
               ],
             ),
           ),
