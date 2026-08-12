@@ -1,78 +1,52 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'package:sentigo/providers/emotion_providers.dart';
 import 'package:sentigo/providers/loading_provider.dart';
-import 'package:sentigo/providers/recommendation_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sentigo/providers/recommendation_provider.dart';
+
+import 'package:sentigo/services/emotion_services.dart';
+import 'package:sentigo/services/recommendation_services.dart';
 
 class EmotionInputBox extends ConsumerStatefulWidget {
   const EmotionInputBox({super.key});
 
   @override
-  ConsumerState<EmotionInputBox> createState() =>
-      _StyledEmotionInputBoxState();
+  ConsumerState<EmotionInputBox> createState() => _StyledEmotionInputBoxState();
 }
 
 class _StyledEmotionInputBoxState extends ConsumerState<EmotionInputBox> {
   final TextEditingController _textController = TextEditingController();
-  final String API_URL_EMOTION_SERVICE =
-      dotenv.env['FLUTTER_APP_EMOTION_SERVICE'] ?? '';
-  final String API_URL_RECOMMENDATION_SERVICE =
-      dotenv.env['FLUTTER_APP_RECOMMENDATION_SERVICE'] ?? '';
+  Future<void> _handleEmotion() async {
+    final emotionService = EmotionServices();
+    final recommendationService = RecommendationServices();
 
-  Future<Map<String, dynamic>> sendText(text) async {
-    ref.read(loadingProvider.notifier).setLoading(true);
-    log('send text', name: 'sendText');
+    final text = _textController.text.trim();
 
-    final url = Uri.parse(API_URL_EMOTION_SERVICE);
-
-    log(_textController.text, name: "text");
-
-    var response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'text': text}),
-    );
-
-    log(response.statusCode.toString(), name: 'status code');
-    var data = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      log('Raw body: ${response.body}', name: 'response body');
-      log('Data :  $data');
-      ref.read(loadingProvider.notifier).setLoading(false);
-      _textController.text = '';
-      return data;
-    } else {
-      log('Error: ${response.statusCode}', name: 'error');
-      ref.read(loadingProvider.notifier).setLoading(false);
-      _textController.text = '';
-
-      return {'emotion': 'Unknown', 'confidence': 0.0};
+    if (text.isEmpty) {
+      return;
     }
-  }
-
-  Future<String> sendRecommendation(emotion) async {
     ref.read(loadingProvider.notifier).setLoading(true);
-    log('send recommendation', name: 'sendRecommendation');
-    final url = Uri.parse(API_URL_RECOMMENDATION_SERVICE);
 
-    var response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'emotion': emotion}),
-    );
-    if (response.statusCode == 200) {
-      log('Raw body: ${response.body}', name: 'response body');
-      var data = jsonDecode(response.body);
+    try {
+      final emotionResponse = await emotionService.getEmotion(text);
+
+      ref.read(emotionProvider.notifier).setEmotion(emotionResponse);
+
+      if (emotionResponse.success && !emotionResponse.noEmotion) {
+        final recommendationResponse = await recommendationService
+            .getRecommendation(emotionResponse.emotion);
+
+        ref
+            .read(recommendationProvider.notifier)
+            .setRecommendation(recommendationResponse);
+      }
+
+      _textController.clear();
+    } catch (e) {
+      print('Error: $e');
+    } finally {
       ref.read(loadingProvider.notifier).setLoading(false);
-      return data['recommendations'];
-    } else {
-      log('Error: ${response.statusCode}', name: 'error');
-      ref.read(loadingProvider.notifier).setLoading(false);
-      return 'No recommendation available';
     }
   }
 
@@ -137,7 +111,7 @@ class _StyledEmotionInputBoxState extends ConsumerState<EmotionInputBox> {
                       ),
 
                       TextSpan(
-                        text: 'Any this to share here?',
+                        text: 'Anything to share here?',
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(
@@ -189,24 +163,7 @@ class _StyledEmotionInputBoxState extends ConsumerState<EmotionInputBox> {
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
-                  onPressed: () async {
-                    log('Button pressed');
-                    var newData = await sendText(_textController.text);
-                    log('New data received: $newData');
-
-                    ref
-                        .read(emotionProvider.notifier)
-                        .setEmotion(
-                          newData['emotion'],
-                          newData['confidence'].toString(),
-                        );
-
-                    var value = await sendRecommendation(newData['emotion']);
-
-                    ref
-                        .read(recommendationNotifier.notifier)
-                        .setRecommendation(value);
-                  },
+                  onPressed: _handleEmotion,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16),
                     shape: RoundedRectangleBorder(
@@ -215,13 +172,8 @@ class _StyledEmotionInputBoxState extends ConsumerState<EmotionInputBox> {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     elevation: 2,
                   ),
-                  child: const Icon(
-                      Icons.check,
-                      color: Colors.black,
-                      size: 24,
-                    ),
-                  ),
-                
+                  child: const Icon(Icons.check, color: Colors.black, size: 24),
+                ),
               ],
             ),
           ),

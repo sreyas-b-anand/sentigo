@@ -3,7 +3,7 @@ class EmotionResponse {
   final String message;
   final bool success;
   final String emotion;
-  final double confidence;
+  final dynamic confidence;
   final bool noEmotion;
 
   EmotionResponse({
@@ -16,7 +16,7 @@ class EmotionResponse {
 
   factory EmotionResponse.fromJson(Map<String, dynamic> json) {
     return EmotionResponse(
-      confidence: (json["confidence"] as num).toDouble(),
+      confidence: (json["confidence"] as num).toDouble() ,
       success: json["success"],
       noEmotion: json["no_emotion"],
       message: json["message"],

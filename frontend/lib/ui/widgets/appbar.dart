@@ -9,6 +9,7 @@ class StyledAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      
       title: Text('Sentigo' , style: Theme.of(context).appBarTheme.titleTextStyle,),
       centerTitle: true,
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor

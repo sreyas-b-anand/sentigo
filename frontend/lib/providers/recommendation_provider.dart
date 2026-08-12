@@ -1,16 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sentigo/models/recommendation.dart';
 
-class RecommendationNotifier extends Notifier<String> {
+class RecommendationNotifier extends Notifier<RecommendationResponse> {
   @override
-  String build() {
-    return '';
+  RecommendationResponse build() {
+    return RecommendationResponse(
+      message: '',
+      success: false,
+      recommendations: '',
+    );
   }
 
-  void setRecommendation(String message) {
-    state = message;
+  void setRecommendation(RecommendationResponse response) {
+    state = response;
   }
 }
 
-final recommendationNotifier = NotifierProvider<RecommendationNotifier, String>(() {
-  return RecommendationNotifier();
-});
+final recommendationProvider =
+    NotifierProvider<RecommendationNotifier, RecommendationResponse>(() {
+      return RecommendationNotifier();
+    });

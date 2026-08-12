@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sentigo/ui/widgets/styled_appbar.dart';
-import 'package:sentigo/ui/widgets/styled_emotion_output_box.dart';
+import 'package:sentigo/ui/widgets/appbar.dart';
+import 'package:sentigo/ui/widgets/output_box.dart';
 import 'package:sentigo/ui/widgets/emotion_input_box.dart';
 
 class Home extends StatelessWidget {
@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
           children: [
             EmotionInputBox(),
             SizedBox(height : 20),
-            StyledEmotionOutputBox(),
+            EmotionOutputBox(),
           ],
         ),
       ),

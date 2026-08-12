@@ -40,7 +40,8 @@ Rules:
 - If the user is disgusted, suggest a specific activity to feel better.
 - Try to give different recommendations each time.
 
-Output ONLY the 3 recommendations.
+
+Output ONLY the 3 recommendations.No need of any heading or so.
 
 Do not include:
 - a heading
