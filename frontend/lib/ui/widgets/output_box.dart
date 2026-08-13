@@ -21,10 +21,7 @@ class EmotionOutputBox extends ConsumerWidget {
       child: DefaultTabController(
         length: 2,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 20,
-            horizontal: 20,
-          ),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: const BorderRadius.only(
@@ -35,11 +32,13 @@ class EmotionOutputBox extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Sentigo predicts that...',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+              Center(
+                child: Text(
+                  'Sentigo predicts that...',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
                 ),
               ),
 
@@ -49,10 +48,7 @@ class EmotionOutputBox extends ConsumerWidget {
                 labelColor: Colors.black,
                 unselectedLabelColor: Color.fromARGB(255, 45, 43, 43),
                 indicatorColor: Colors.black,
-                tabs: [
-                  Tab(text: 'Your Emotion'),
-                  Tab(text: 'Do This Now'),
-                ],
+                tabs: [Tab(text: 'Your Emotion'), Tab(text: 'Do This Now')],
               ),
 
               const SizedBox(height: 6),
@@ -60,10 +56,7 @@ class EmotionOutputBox extends ConsumerWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    EmotionTab(
-                      emotion: emotion,
-                      loading: loading,
-                    ),
+                    EmotionTab(emotion: emotion, loading: loading),
                     RecommendationTab(
                       recommendation: recommendation,
                       loading: loading,

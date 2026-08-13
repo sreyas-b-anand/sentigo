@@ -10,11 +10,11 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StyledAppBar(),
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           EmotionInputBox(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
           Expanded(
             child: EmotionOutputBox(),
           ),

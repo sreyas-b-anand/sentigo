@@ -1,20 +1,51 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sentigo/models/emotion.dart';
+import 'package:sentigo/providers/loading_provider.dart';
+import 'package:sentigo/providers/recommendation_provider.dart';
+import 'package:sentigo/services/emotion_services.dart';
+import 'package:sentigo/services/recommendation_services.dart';
 
 class EmotionNotifier extends Notifier<EmotionResponse> {
+  final EmotionServices _emotionService = EmotionServices();
+  final RecommendationServices _recommendationService =
+      RecommendationServices();
+
   @override
   EmotionResponse build() {
     return EmotionResponse(
-      message: '',
       success: false,
       emotion: '',
       confidence: 0,
-      noEmotion: true,
+      noEmotion: false,
+      message: '',
     );
   }
 
-  void setEmotion(EmotionResponse response) {
-    state = response;
+  Future<void> analyze(String text) async {
+    if (text.trim().isEmpty) return;
+
+    ref.read(loadingProvider.notifier).setLoading(true);
+
+    try {
+      final emotionResponse =
+          await _emotionService.getEmotion(text.trim());
+
+      state = emotionResponse;
+
+      if (emotionResponse.success && !emotionResponse.noEmotion) {
+        final recommendationResponse =
+            await _recommendationService.getRecommendation(
+          emotionResponse.emotion,
+        );
+
+        ref
+            .read(recommendationProvider.notifier)
+            .setRecommendation(recommendationResponse);
+      }
+    } finally {
+      ref.read(loadingProvider.notifier).setLoading(false);
+    }
   }
 }
 

@@ -14,6 +14,7 @@ class RecommendationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Loading
     if (loading) {
       return Center(
         child: SpinKitFadingCircle(
@@ -22,19 +23,48 @@ class RecommendationTab extends StatelessWidget {
         ),
       );
     }
-
-    if (!recommendation.success ||
-        recommendation.recommendations.isEmpty) {
+    if (!recommendation.success && recommendation.message.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Text(
-            '🕒 Hold on...\n'
-            'We’re preparing personalized tips for you based on your emotional state.',
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall
-                ?.copyWith(color: Colors.grey[700]),
+            'Your personalized recommendations will appear here\n'
+            'after we understand how you\'re feeling.',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              color: const Color.fromARGB(221, 82, 81, 81),
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    if (!recommendation.success) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            recommendation.message.isNotEmpty
+                ? recommendation.message
+                : 'Something went wrong!',
+            style: Theme.of(
+              context,
+            ).textTheme.titleSmall?.copyWith(color: Colors.black87),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    if (recommendation.recommendations.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            'No recommendation is available yet.',
+            style: Theme.of(
+              context,
+            ).textTheme.titleSmall?.copyWith(color: Colors.grey[700]),
             textAlign: TextAlign.center,
           ),
         ),
@@ -46,7 +76,7 @@ class RecommendationTab extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: const [
             BoxShadow(
@@ -56,11 +86,12 @@ class RecommendationTab extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(
-          recommendation.recommendations,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            height: 1.5,
-            color: Colors.black87,
+        child: SingleChildScrollView(
+          child: Text(
+            recommendation.recommendations,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(height: 1.5, color: Colors.black87),
           ),
         ),
       ),

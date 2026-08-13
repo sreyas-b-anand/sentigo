@@ -26,7 +26,6 @@ class RecommendationServices {
 
       return RecommendationResponse.fromJson(data);
     } catch (e) {
-      print(e.toString());
       rethrow;
     }
   }

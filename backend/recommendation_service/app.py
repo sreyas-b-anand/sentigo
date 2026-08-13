@@ -83,5 +83,5 @@ def get_recommendation(request: RecommendationRequest):
         return RecommendationResponse(
             recommendations="",
             success=False,
-            message="Failed to generate recommendations",
+            message="An api error occured!",
         )
