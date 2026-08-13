@@ -18,7 +18,7 @@ class RecommendationTab extends StatelessWidget {
     if (loading) {
       return Center(
         child: SpinKitFadingCircle(
-          color: Theme.of(context).colorScheme.primary,
+          color: Color.fromARGB(255, 61, 61, 61),
           size: 50,
         ),
       );
@@ -74,25 +74,63 @@ class RecommendationTab extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6,
-              offset: Offset(0, 3),
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
-        child: SingleChildScrollView(
-          child: Text(
-            recommendation.recommendations,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(height: 1.5, color: Colors.black87),
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFDEEE3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.favorite_outline,
+                    size: 20,
+                    color: Color(0xFF8A6652),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                Text(
+                  'A little something for you',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 14),
+
+            Expanded(
+              child: SingleChildScrollView(
+                child: Text(
+                  recommendation.recommendations,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    height: 1.6,
+                    color: const Color(0xFF4F4945),
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

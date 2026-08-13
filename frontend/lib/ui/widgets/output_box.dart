@@ -34,7 +34,7 @@ class EmotionOutputBox extends ConsumerWidget {
             children: [
               Center(
                 child: Text(
-                  'Sentigo predicts that...',
+                  'Here\'s what Sentigo noticed...',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
