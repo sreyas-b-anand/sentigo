@@ -28,28 +28,34 @@ class EmotionNotifier extends Notifier<EmotionResponse> {
     ref.read(loadingProvider.notifier).setLoading(true);
 
     try {
-      final emotionResponse =
-          await _emotionService.getEmotion(text.trim());
+      final emotionResponse = await _emotionService.getEmotion(text.trim());
 
       state = emotionResponse;
 
       if (emotionResponse.success && !emotionResponse.noEmotion) {
-        final recommendationResponse =
-            await _recommendationService.getRecommendation(
-          emotionResponse.emotion,
-        );
+        final recommendationResponse = await _recommendationService
+            .getRecommendation(emotionResponse.emotion);
 
         ref
             .read(recommendationProvider.notifier)
             .setRecommendation(recommendationResponse);
       }
+    } catch (e) {
+      // print('Emotion API error: $e');
+
+      state = EmotionResponse(
+        success: false,
+        emotion: '',
+        confidence: 0,
+        noEmotion: false,
+        message: e.toString(),
+      );
     } finally {
       ref.read(loadingProvider.notifier).setLoading(false);
     }
   }
 }
 
-final emotionProvider =
-    NotifierProvider<EmotionNotifier, EmotionResponse>(
+final emotionProvider = NotifierProvider<EmotionNotifier, EmotionResponse>(
   () => EmotionNotifier(),
 );
