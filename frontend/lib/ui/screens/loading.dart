@@ -10,10 +10,15 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   @override
   void initState() {
-    Future.delayed(
-      Duration(seconds: 2),
-    ).then((value) => Navigator.popAndPushNamed(context , '/home') );
     super.initState();
+    Future.delayed(
+    const Duration(seconds: 2),
+    () {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    },
+  );
   }
 
   @override
